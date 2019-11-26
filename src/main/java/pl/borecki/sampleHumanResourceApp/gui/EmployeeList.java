@@ -1,6 +1,5 @@
 package pl.borecki.sampleHumanResourceApp.gui;
 
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -13,8 +12,6 @@ import org.springframework.util.StringUtils;
 import pl.borecki.sampleHumanResourceApp.model.Employee;
 import pl.borecki.sampleHumanResourceApp.repository.EmployeeRepository;
 
-import java.time.LocalDate;
-
 @Route(value = "employee-list", layout = MainLayout.class)
 public class EmployeeList extends VerticalLayout {
     private EmployeeRepository employeeRepository;
@@ -22,7 +19,6 @@ public class EmployeeList extends VerticalLayout {
     Grid<Employee> grid;
     TextField filter;
     private Button addNewBtn;
-    private Button logout;
 
     public EmployeeList(EmployeeRepository repo, EmployeeEditor editor) {
         this.employeeRepository = repo;
@@ -30,11 +26,9 @@ public class EmployeeList extends VerticalLayout {
         this.grid = new Grid<>(Employee.class);
         this.filter = new TextField();
         this.addNewBtn = new Button("New employee", VaadinIcon.PLUS.create());
-        this.logout = new Button("Logout", VaadinIcon.SIGN_OUT.create());
 
-        HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn, logout);
+        HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
         actions.setWidthFull();
-        logout.getStyle().set("margin-left", "auto");
         add(actions, grid, editor);
 
         grid.setHeight("200px");
@@ -51,12 +45,6 @@ public class EmployeeList extends VerticalLayout {
         });
 
         addNewBtn.addClickListener(e -> editor.editEmployee(new Employee("", "", null, "")));
-
-        logout.addClickListener(e -> {
-            UI ui = UI.getCurrent();
-            ui.getPage().executeJs("window.location.href='logout'");
-            ui.getSession().close();
-        });
 
         editor.setChangeHandler(() -> {
             editor.setVisible(false);
