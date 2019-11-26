@@ -2,6 +2,8 @@ package pl.borecki.sampleHumanResourceApp.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -11,13 +13,14 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotEmpty()
     private String firstName;
-    @Column(nullable = false)
+    @NotEmpty()
     private String lastName;
-    @Column(nullable = false)
+    @NotNull
     private LocalDate dateOfBirth;
-    @Column(unique = true, nullable = false)
+    @NotNull
+    @Column(unique = true)
     @Email
     private String email;
 
