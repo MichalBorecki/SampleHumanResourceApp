@@ -15,7 +15,7 @@ import pl.borecki.sampleHumanResourceApp.repository.EmployeeRepository;
 
 import java.time.LocalDate;
 
-@Route(value = "employee-list")
+@Route(value = "employee-list", layout = MainLayout.class)
 public class EmployeeList extends VerticalLayout {
     private EmployeeRepository employeeRepository;
     private EmployeeEditor editor;
